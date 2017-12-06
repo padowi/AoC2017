@@ -1,0 +1,7 @@
+*.pyc
+*.swp
+
+*/nim/nimcache/*
+# nim produces a binary with the name of the source-file, minus extension
+*/AoC_*
+!*/AoC_*.nim
