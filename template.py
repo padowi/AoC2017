@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import sys
 import os.path
 
 def main(data):
@@ -13,8 +14,15 @@ if __name__ == '__main__':
     testResults = [ main(ti) == testVectors[ti] for ti in testVectors.keys() ]
     if all(testResults):
         print("All tests passed!")
-        if os.path.isfile("../input"):
-            with open('../input', 'r') as fh:
+        inputFile = os.path.join(
+            os.path.dirname(
+                os.path.dirname(
+                    os.path.abspath(sys.argv[0])
+                )
+            ), 'input'
+        )
+        if os.path.isfile(inputFile):
+            with open(inputFile, 'r') as fh:
                 inputData = fh.read()
                 inputData = inputData.strip()
             print(main(inputData))
