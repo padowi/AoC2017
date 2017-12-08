@@ -23,8 +23,7 @@ if __name__ == '__main__':
         )
         if os.path.isfile(inputFile):
             with open(inputFile, 'r') as fh:
-                inputData = fh.read()
-                inputData = inputData.strip()
+                inputData = fh.readlines()
             print(main(inputData))
         else:
             print("Input file not found")
