@@ -29,3 +29,5 @@ if __name__ == '__main__':
             print("Input file not found")
     else:
         print(testResults)
+
+# vim: set filetype=python set foldmethod=marker
