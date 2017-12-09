@@ -11,7 +11,7 @@ if __name__ == '__main__':
         '': 0,
     }
     
-    testResults = [ main(ti) == testVectors[ti] for ti in testVectors.keys() ]
+    testResults = [ main(ti) == eo for (ti, eo) in testVectors.items() ]
     if all(testResults):
         print("All tests passed!")
         inputFile = os.path.join(
