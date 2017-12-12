@@ -43,22 +43,23 @@ def main(keySpace, inputLengths):
     blocks = list()
     tmpList = list()
 
-    for k in keySpace.keys():
+    for k in sorted(keySpace.keys()):
         if k % 16 == 0 and len(tmpList) > 0:
             blocks.append(tmpList)
             tmpList = list()
-        tmpList.append(k)
+        tmpList.append(keySpace[k])
     blocks.append(tmpList)
     
     hashes = list()
     for block in blocks:
-        print(block)
-        print(functools.reduce(xor, block))
         hashes.append(functools.reduce(xor, block))
 
     result = ''
     for h in hashes:
-        result += hex(h).lstrip('0x')
+        tmp = hex(h).lstrip('0x')
+        if len(tmp) == 1:
+            tmp = '0' + tmp
+        result += tmp
     return result
 
 if __name__ == '__main__':
