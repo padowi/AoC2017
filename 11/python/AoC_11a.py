@@ -59,7 +59,23 @@ def main(data):
     # we need a BFS here...
     print(coords)
 
+    moves = 0
     location = coords[-1]
+
+    while not location == origin:
+        moves += 1
+        if location[0] < origin[0]:
+            # we should move right
+            # should we move up or down?
+            if location[1] < origin[1]:
+                # we should move up (i.e. ne)
+                location = ne(location)
+            elif location[1] > origin[1]:
+                # we should move down (i.e. se)
+                location = se(location)
+            else:
+                pass
+
 
 
 if __name__ == '__main__':
