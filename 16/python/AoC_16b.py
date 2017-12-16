@@ -15,24 +15,35 @@ def partner(dancers, p1, p2):
 
 def main(data):
     dancers = list("abcdefghijklmnop")
-    for i in range(1_000_000_000):
-        if i % 10_000 == 0:
-            print("Iteration {} * 10_000: {} (start)".format(i, datetime.datetime.now()))
-        for instruction in data.split(","):
-            if instruction.startswith("s"):
-                dancers = spin(dancers, int(instruction[1:]))
-            elif instruction.startswith("x"):
-                posA, posB = instruction[1:].split('/')
-                posA = int(posA)
-                posB = int(posB)
-                dancers = partner(dancers, posA, posB)
-            elif instruction.startswith("p"):
-                progA, progB = instruction[1:].split('/')
-                posA = dancers.index(progA)
-                posB = dancers.index(progB)
-                dancers = partner(dancers, posA, posB)
-        if i % 10_000 == 0:
-            print("Iteration {} * 10_000: {} (end)".format(i, datetime.datetime.now()))
+    instructions = data.split(",")
+    parsedInstructions = list()
+    for instruction in instructions:
+        if instruction.startswith('s'):
+            parsedInstructions.append( ('s', int(instruction[1:])) )
+        elif instruction.startswith('x'):
+            posA, posB = instruction[1:].split('/')
+            parsedInstructions.append( ('x', int(posA), int(posB)) )
+        elif instruction.startswith('p'):
+            progA, progB = instruction[1:].split('/')
+            parsedInstructions.append( ('p', progA, progB) )
+
+    for i in range(999_999_960, 1_000_000_000):
+        # every 60th cycle we begin at the starting point
+        # which means that if we start at 999999960 that will be the same thing as starting at 0
+        if dancers == list('abcdefghijklmnop'):
+            print(i)
+        for instruction in parsedInstructions:
+            if instruction[0] == 's':
+                dancers = spin(dancers, instruction[1])
+            elif instruction[0] == 'x':
+                dancers = partner(dancers, instruction[1], instruction[2])
+            elif instruction[0] == 'p':
+                dancers = partner(
+                    dancers,
+                    dancers.index(instruction[1]),
+                    dancers.index(instruction[2])
+                )
+
     return ''.join(dancers)
 
 if __name__ == '__main__':
